@@ -22,12 +22,15 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://picsum.photos/300/300?grayscale\"")
+        }
         release {
+            buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
+            buildConfigField("String", "BASE_IMAGE_URL", "\"https://picsum.photos/300/300?grayscale\"")
             isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     compileOptions {
