@@ -71,8 +71,8 @@ dependencies {
     implementation(libs.logging.interceptor)
 
     implementation(libs.room.ktx)
-    ksp(libs.room.runtime)
-    annotationProcessor(libs.room.compiler)
+    implementation(libs.room.runtime)
+    ksp(libs.room.compiler)
 
     implementation(libs.navigation.ui)
     implementation(libs.navigation.fragment)

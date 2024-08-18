@@ -1,7 +1,6 @@
 package com.example.nesinecase.domain.use_case
 
 import com.example.nesinecase.core.base.BaseUseCase
-import com.example.nesinecase.core.extensions.tryFlowOrEmitError
 import com.example.nesinecase.core.util.Resource
 import com.example.nesinecase.di.IoDispatcher
 import com.example.nesinecase.domain.model.PostUIModel

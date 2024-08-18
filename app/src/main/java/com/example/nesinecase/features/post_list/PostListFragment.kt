@@ -1,7 +1,9 @@
 package com.example.nesinecase.features.post_list
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
@@ -40,6 +42,12 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListB
                 if (posts.isNotEmpty()) {
                     postListAdapter.submitList(posts)
                 }
+            }
+        }
+
+        lifecycleScope.launch {
+            postListViewModel.message.collect {
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
     }

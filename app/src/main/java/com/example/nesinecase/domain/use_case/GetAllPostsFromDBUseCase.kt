@@ -7,7 +7,9 @@ import com.example.nesinecase.domain.model.PostUIModel
 import com.example.nesinecase.domain.repository.PostRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 
 class GetAllPostsFromDBUseCase @Inject constructor(
@@ -16,5 +18,9 @@ class GetAllPostsFromDBUseCase @Inject constructor(
 ) : BaseUseCase.FlowableUseCaseNoParams<List<PostUIModel>> {
 
     override fun execute(): Flow<Resource<List<PostUIModel>>> =
-        postRepository.getApiPostListAndSaveDB().flowOn(dispatcher)
+        postRepository.getAllPostsFromDB().map { posts ->
+            Resource.Success(posts)
+        }.catch { Resource.Error(it) }
+            .flowOn(dispatcher)
+
 }

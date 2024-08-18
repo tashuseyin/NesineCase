@@ -2,6 +2,7 @@ package com.example.nesinecase.features.post_list.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
@@ -10,6 +11,7 @@ import com.example.nesinecase.core.extensions.loadImageUrl
 import com.example.nesinecase.core.extensions.placeholderProgressBar
 import com.example.nesinecase.databinding.LayoutPostItemBinding
 import com.example.nesinecase.domain.model.PostUIModel
+import com.example.nesinecase.features.post_list.PostListFragmentDirections
 
 class PostListAdapter : ListAdapter<PostUIModel,PostListViewHolder>(PostsDiffUtilCallBack()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostListViewHolder {
@@ -29,12 +31,16 @@ class PostListViewHolder(private val binding: LayoutPostItemBinding): ViewHolder
             postImage.loadImageUrl(postImage.context, getImageUrl(itemPosition = itemPosition), postImage.context.placeholderProgressBar())
             title.text = postItem.title
             body.text = postItem.body
+
+            root.setOnClickListener {
+                it.findNavController().navigate(PostListFragmentDirections.actionPostListFragmentToPostDetailFragment())
+            }
         }
     }
 }
 
 
-class PostsDiffUtilCallBack() : DiffUtil.ItemCallback<PostUIModel>() {
+class PostsDiffUtilCallBack : DiffUtil.ItemCallback<PostUIModel>() {
 
     override fun areItemsTheSame(oldItem: PostUIModel, newItem: PostUIModel): Boolean {
         return oldItem.id == newItem.id
