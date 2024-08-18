@@ -1,37 +1,37 @@
 package com.example.nesinecase.features.post_list
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.nesinecase.core.base.BaseViewModel
 import com.example.nesinecase.core.util.Result
+import com.example.nesinecase.domain.model.PostUIModel
 import com.example.nesinecase.domain.use_case.GetPostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class PostListViewModel @Inject constructor(
     private val getPostsUseCase: GetPostsUseCase
-) : ViewModel() {
+) : BaseViewModel() {
 
-    private val _uiState: MutableStateFlow<PostListUIState> = MutableStateFlow(PostListUIState())
-    private val uiState: StateFlow<PostListUIState> = _uiState.asStateFlow()
+    private val _posts: MutableStateFlow<List<PostUIModel>> = MutableStateFlow(emptyList())
+    val posts: StateFlow<List<PostUIModel>> = _posts.asStateFlow()
 
+    init {
+        getPosts()
+    }
 
-
-    fun getPosts() {
+    private fun getPosts() {
         viewModelScope.launch {
-            getPostsUseCase.execute().collect { result ->
+            getPostsUseCase.execute().collectViewModel { result ->
                 when (result) {
-                   is Result.Success -> {
-                       _uiState.update { state ->
-                           state.copy(posts = result.data)
-                       }
+                    is Result.Success -> {
+                        _posts.value = result.data
                     }
-                    else -> {}
+                    is Result.Error -> {}
                 }
             }
         }

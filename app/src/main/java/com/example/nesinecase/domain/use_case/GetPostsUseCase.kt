@@ -1,6 +1,6 @@
 package com.example.nesinecase.domain.use_case
 
-import android.util.Log
+import com.example.nesinecase.core.base.BaseUseCase
 import com.example.nesinecase.core.util.Result
 import com.example.nesinecase.di.IoDispatcher
 import com.example.nesinecase.domain.model.PostUIModel
@@ -16,17 +16,15 @@ import javax.inject.Inject
 class GetPostsUseCase @Inject constructor(
     private val postRepository: PostRepository,
     @IoDispatcher private val dispatcher: CoroutineDispatcher
-) {
-    fun execute(): Flow<Result<List<PostUIModel>>> = flow {
-        emit(postRepository.getPosts())
-    }.map {
-        Log.i("SUCCESS","SUCCESS")
-        Result.Success(it) }
-        .catch {
-            Log.i("ERROR","ERROR")
-            Result.Error(it.fillInStackTrace())
-        }
-        .flowOn(dispatcher)
+) : BaseUseCase.FlowableUseCaseNoParams<List<PostUIModel>> {
+
+    override fun execute(): Flow<Result<List<PostUIModel>>> {
+        return flow {
+            emit(postRepository.getPosts())
+        }.map { Result.Success(it) }
+            .catch { Result.Error(it) }
+            .flowOn(dispatcher)
+    }
 }
 
 

@@ -1,0 +1,46 @@
+package com.example.nesinecase.features.post_list.adapter
+
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.example.nesinecase.core.extensions.getImageUrl
+import com.example.nesinecase.core.extensions.loadImageUrl
+import com.example.nesinecase.core.extensions.placeholderProgressBar
+import com.example.nesinecase.databinding.LayoutPostItemBinding
+import com.example.nesinecase.domain.model.PostUIModel
+
+class PostListAdapter : ListAdapter<PostUIModel,PostListViewHolder>(PostsDiffUtilCallBack()) {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostListViewHolder {
+        val binding = LayoutPostItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return PostListViewHolder(binding)
+    }
+
+    override fun onBindViewHolder(holder: PostListViewHolder, position: Int) {
+        holder.bind(currentList[position], itemPosition = position)
+    }
+}
+
+
+class PostListViewHolder(private val binding: LayoutPostItemBinding): ViewHolder(binding.root) {
+    fun bind(postItem: PostUIModel, itemPosition: Int) {
+        binding.apply {
+            postImage.loadImageUrl(postImage.context, getImageUrl(itemPosition = itemPosition), postImage.context.placeholderProgressBar())
+            title.text = postItem.title
+            body.text = postItem.body
+        }
+    }
+}
+
+
+class PostsDiffUtilCallBack() : DiffUtil.ItemCallback<PostUIModel>() {
+
+    override fun areItemsTheSame(oldItem: PostUIModel, newItem: PostUIModel): Boolean {
+        return oldItem.id == newItem.id
+    }
+
+    override fun areContentsTheSame(oldItem: PostUIModel, newItem: PostUIModel): Boolean {
+        return oldItem.body == newItem.body && oldItem.title == newItem.title
+    }
+}
