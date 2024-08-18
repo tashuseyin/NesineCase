@@ -2,9 +2,8 @@ package com.example.nesinecase.features.post_list
 
 import androidx.lifecycle.viewModelScope
 import com.example.nesinecase.core.base.BaseViewModel
-import com.example.nesinecase.core.util.Result
+import com.example.nesinecase.core.util.Resource
 import com.example.nesinecase.domain.model.PostUIModel
-import com.example.nesinecase.domain.use_case.GetPostsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,10 +27,10 @@ class PostListViewModel @Inject constructor(
         viewModelScope.launch {
             getPostsUseCase.execute().collectViewModel { result ->
                 when (result) {
-                    is Result.Success -> {
+                    is Resource.Success -> {
                         _posts.value = result.data
                     }
-                    is Result.Error -> {}
+                    is Resource.Error -> {}
                 }
             }
         }

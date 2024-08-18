@@ -25,10 +25,12 @@ android {
         debug {
             buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
             buildConfigField("String", "BASE_IMAGE_URL", "\"https://picsum.photos/300/300?grayscale\"")
+            buildConfigField("String", "DATABASE_NAME", "\"posts.db\"")
         }
         release {
             buildConfigField("String", "BASE_URL", "\"https://jsonplaceholder.typicode.com/\"")
             buildConfigField("String", "BASE_IMAGE_URL", "\"https://picsum.photos/300/300?grayscale\"")
+            buildConfigField("String", "DATABASE_NAME", "\"posts.db\"")
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
