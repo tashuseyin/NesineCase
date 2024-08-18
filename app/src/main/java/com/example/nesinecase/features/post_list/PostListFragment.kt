@@ -1,18 +1,19 @@
 package com.example.nesinecase.features.post_list
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import com.example.nesinecase.R
+import androidx.fragment.app.viewModels
+import com.example.nesinecase.core.base.BaseFragment
+import com.example.nesinecase.databinding.FragmentPostListBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
+class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListBinding::inflate) {
 
-class PostListFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_post_list, container, false)
+    private val postListViewModel: PostListViewModel by viewModels()
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        postListViewModel.getPosts()
     }
 }
