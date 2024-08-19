@@ -24,7 +24,17 @@ class PostRepositoryImpl @Inject constructor(
             emit(Resource.Error(e))
         }
     }
-    override fun getAllPostsFromDB(): Flow<List<PostUIModel>> = localDataSource.getAllPosts()
+
+    override fun getAllPostsFromDB(): Flow<Resource<List<PostUIModel>>> = flow {
+        try {
+            val posts = localDataSource.getAllPosts()
+            emit(Resource.Success(posts))
+        } catch (e: Exception) {
+            emit(Resource.Error(e))
+        }
+    }
+
     override suspend fun deletePost(id: Int): Int = localDataSource.deletePost(id)
-    override suspend fun updatePost(post: PostUIModel): Int = localDataSource.updatePost(post.title, post.body, post.id)
+    override suspend fun updatePost(post: PostUIModel): Int =
+        localDataSource.updatePost(post.title, post.body, post.id)
 }

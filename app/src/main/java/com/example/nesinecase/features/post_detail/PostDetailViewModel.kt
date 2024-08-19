@@ -18,7 +18,7 @@ class PostDetailViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _isUpdatePost: MutableStateFlow<Boolean?> = MutableStateFlow(null)
-     val isUpdatePost: StateFlow<Boolean?> = _isUpdatePost.asStateFlow()
+    val isUpdatePost: StateFlow<Boolean?> = _isUpdatePost.asStateFlow()
 
     fun updatePost(postItem: PostUIModel) {
         viewModelScope.launch {
@@ -27,6 +27,7 @@ class PostDetailViewModel @Inject constructor(
                     is Resource.Success -> {
                         _isUpdatePost.value = true
                     }
+
                     is Resource.Error -> {
                         _isUpdatePost.value = false
                     }

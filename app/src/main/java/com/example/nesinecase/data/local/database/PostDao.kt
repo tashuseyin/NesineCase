@@ -14,7 +14,7 @@ interface PostDao {
     suspend fun insertPostList(posts: List<PostEntity>)
 
     @Query("SELECT * FROM post_table")
-    fun getAllPosts(): Flow<List<PostUIModel>>
+    suspend fun getAllPosts(): List<PostUIModel>
 
     @Query("DELETE FROM post_table WHERE id = :id")
     suspend fun deletePost(id: Int): Int

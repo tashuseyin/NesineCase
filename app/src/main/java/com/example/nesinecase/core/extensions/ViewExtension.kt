@@ -2,7 +2,6 @@ package com.example.nesinecase.core.extensions
 
 import android.content.Context
 import android.widget.ImageView
-import androidx.fragment.app.Fragment
 import androidx.swiperefreshlayout.widget.CircularProgressDrawable
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -10,9 +9,9 @@ import com.example.nesinecase.BuildConfig
 import com.example.nesinecase.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-fun ImageView.loadImageUrl(context: Context, imageUrl: String?, progressDrawable: CircularProgressDrawable) {
+fun ImageView.loadImageUrl(context: Context, imageUrl: String?) {
     val options = RequestOptions()
-        .placeholder(progressDrawable)
+        .placeholder(context.placeholderProgressBar())
         .error(R.drawable.ic_image_placeholder)
 
 
@@ -26,24 +25,37 @@ fun getImageUrl(itemPosition: Int): String {
     return "${BuildConfig.BASE_IMAGE_URL}&random=$itemPosition"
 }
 
-
-fun Fragment.dialog(
-    block: MaterialAlertDialogBuilder.() -> Unit,
-) {
-    val builder = MaterialAlertDialogBuilder(requireContext())
-    block.invoke(builder)
-    builder.show()
-}
-
-fun Fragment.errorDialog(
-    block: MaterialAlertDialogBuilder.() -> Unit,
-) {
-    this.dialog {
-        setTitle(this.context.getString(R.string.app_name))
-        setCancelable(true)
-        setPositiveButton(this.context.getString(R.string.app_name)) { _, _ -> }
-        block.invoke(this)
+fun Context.placeholderProgressBar() : CircularProgressDrawable {
+    return CircularProgressDrawable(this).apply {
+        strokeWidth = 8f
+        centerRadius = 40f
+        setColorSchemeColors(R.color.white)
+        start()
     }
 }
 
-
+fun Context.showDialog(
+    title: String? = null,
+    message: String? = null,
+    cancelable: Boolean = true,
+    positiveButtonText: String? = null,
+    onPositiveButtonClick: (() -> Unit)? = null,
+    negativeButtonText: String? = null,
+    onNegativeButtonClick: (() -> Unit)? = null,
+    block: MaterialAlertDialogBuilder.() -> Unit = {}
+) {
+    val builder = MaterialAlertDialogBuilder(this).apply {
+        title?.let { setTitle(it) }
+        message?.let { setMessage(it) }
+        setCancelable(cancelable)
+        setOnDismissListener { onNegativeButtonClick?.invoke() }
+        positiveButtonText?.let {
+            setPositiveButton(it) { _, _ -> onPositiveButtonClick?.invoke() }
+        }
+        negativeButtonText?.let {
+            setNegativeButton(it){ _, _ -> onNegativeButtonClick?.invoke() }
+        }
+        block.invoke(this)
+    }
+    builder.show()
+}

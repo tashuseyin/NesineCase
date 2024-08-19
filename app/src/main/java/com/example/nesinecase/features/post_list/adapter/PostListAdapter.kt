@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.nesinecase.core.extensions.getImageUrl
 import com.example.nesinecase.core.extensions.loadImageUrl
-import com.example.nesinecase.core.extensions.placeholderProgressBar
 import com.example.nesinecase.databinding.LayoutPostItemBinding
 import com.example.nesinecase.domain.model.PostUIModel
 import com.example.nesinecase.features.post_list.PostListFragmentDirections
@@ -29,7 +28,7 @@ class PostListViewHolder(private val binding: LayoutPostItemBinding): ViewHolder
     fun bind(postItem: PostUIModel, itemPosition: Int) {
         val imageUrl = getImageUrl(itemPosition = itemPosition)
         binding.apply {
-            postImage.loadImageUrl(postImage.context, imageUrl, postImage.context.placeholderProgressBar())
+            postImage.loadImageUrl(postImage.context, imageUrl)
             title.text = postItem.title
             body.text = postItem.body
             root.setOnClickListener {
