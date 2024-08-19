@@ -1,14 +1,11 @@
 package com.example.nesinecase.features.post_list
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.DividerItemDecoration
 import com.example.nesinecase.core.base.BaseFragment
-import com.example.nesinecase.core.util.ProgressDialogUtil
 import com.example.nesinecase.databinding.FragmentPostListBinding
 import com.example.nesinecase.features.post_list.adapter.PostListAdapter
 import dagger.hilt.android.AndroidEntryPoint
@@ -33,21 +30,10 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListB
 
     private fun collectViewModel() {
         lifecycleScope.launch {
-            postListViewModel.isLoading.collect { isLoading ->
-                ProgressDialogUtil.checkProgressDialog(requireContext(), isLoading)
-            }
-        }
-        lifecycleScope.launch {
             postListViewModel.posts.collect { posts ->
                 if (posts.isNotEmpty()) {
                     postListAdapter.submitList(posts)
                 }
-            }
-        }
-
-        lifecycleScope.launch {
-            postListViewModel.message.collect {
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
             }
         }
     }

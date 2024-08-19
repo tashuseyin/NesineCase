@@ -9,6 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.onStart
 
+/*
 abstract class BaseViewModel : ViewModel() {
 
     private val _isShowLoading: MutableStateFlow<Boolean> = MutableStateFlow(true)
@@ -33,3 +34,4 @@ abstract class BaseViewModel : ViewModel() {
         }
     }
 }
+ */

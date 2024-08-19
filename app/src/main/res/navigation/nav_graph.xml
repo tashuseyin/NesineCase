@@ -22,5 +22,11 @@
         <action
             android:id="@+id/action_postDetailFragment_to_postListFragment"
             app:destination="@id/postListFragment" />
+        <argument
+            android:name="postUIModel"
+            app:argType="com.example.nesinecase.domain.model.PostUIModel" />
+        <argument
+            android:name="imageUrl"
+            app:argType="string" />
     </fragment>
 </navigation>

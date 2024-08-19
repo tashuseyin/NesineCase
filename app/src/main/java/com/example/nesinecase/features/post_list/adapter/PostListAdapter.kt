@@ -27,13 +27,13 @@ class PostListAdapter : ListAdapter<PostUIModel,PostListViewHolder>(PostsDiffUti
 
 class PostListViewHolder(private val binding: LayoutPostItemBinding): ViewHolder(binding.root) {
     fun bind(postItem: PostUIModel, itemPosition: Int) {
+        val imageUrl = getImageUrl(itemPosition = itemPosition)
         binding.apply {
-            postImage.loadImageUrl(postImage.context, getImageUrl(itemPosition = itemPosition), postImage.context.placeholderProgressBar())
+            postImage.loadImageUrl(postImage.context, imageUrl, postImage.context.placeholderProgressBar())
             title.text = postItem.title
             body.text = postItem.body
-
             root.setOnClickListener {
-                it.findNavController().navigate(PostListFragmentDirections.actionPostListFragmentToPostDetailFragment())
+                it.findNavController().navigate(PostListFragmentDirections.actionPostListFragmentToPostDetailFragment(postItem, imageUrl))
             }
         }
     }

@@ -13,6 +13,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 fun ImageView.loadImageUrl(context: Context, imageUrl: String?, progressDrawable: CircularProgressDrawable) {
     val options = RequestOptions()
         .placeholder(progressDrawable)
+        .error(R.drawable.ic_image_placeholder)
+
 
     Glide.with(context)
         .setDefaultRequestOptions(options)

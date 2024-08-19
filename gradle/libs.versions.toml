@@ -59,7 +59,7 @@ androidx-swiperefreshlayout = { group = "androidx.swiperefreshlayout", name = "s
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 kotlin-ksp = { id = "com.google.devtools.ksp", version.ref = "ksp"}
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 navigation = { id = "androidx.navigation.safeargs.kotlin", version.ref = "navigation" }
