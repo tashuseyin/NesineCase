@@ -8,7 +8,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.nesinecase.core.base.BaseFragment
 import com.example.nesinecase.core.extensions.loadImageUrl
-import com.example.nesinecase.core.extensions.placeholderProgressBar
 import com.example.nesinecase.core.extensions.setDataPreviousScreen
 import com.example.nesinecase.core.util.Constants
 import com.example.nesinecase.databinding.FragmentPostDetailBinding
@@ -33,8 +32,10 @@ class PostDetailFragment :
     private fun collectViewModel() {
         lifecycleScope.launch {
             postDetailViewModel.isUpdatePost.collect { isUpdate ->
-                findNavController().setDataPreviousScreen(Constants.IS_UPDATE_POST_KEY, isUpdate ?: false)
-                findNavController().popBackStack()
+                isUpdate?.let {
+                    findNavController().setDataPreviousScreen(Constants.IS_UPDATE_POST_KEY, isUpdate)
+                    findNavController().popBackStack()
+                }
             }
         }
     }

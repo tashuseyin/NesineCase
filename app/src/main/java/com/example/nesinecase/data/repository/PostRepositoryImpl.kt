@@ -15,11 +15,11 @@ class PostRepositoryImpl @Inject constructor(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : PostRepository {
-    override fun getApiPostListAndSaveDB(): Flow<Resource<Unit>> = flow {
+    override fun getApiPostListAndSaveDB(): Flow<Resource<List<PostUIModel>>> = flow {
         try {
             val posts = remoteDataSource.getPosts().map { it.toUIModel() }
             localDataSource.insertPostList(posts.map { it.toEntity() })
-            emit(Resource.Success(Unit))
+            emit(Resource.Success(posts))
         } catch (e: Exception) {
             emit(Resource.Error(e))
         }

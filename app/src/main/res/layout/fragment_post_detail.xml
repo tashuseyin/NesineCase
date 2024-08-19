@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="@dimen/dimen16"
     tools:context=".features.post_detail.PostDetailFragment">
@@ -33,7 +33,10 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/title"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium_italic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font14" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -44,15 +47,20 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/body"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_medium_italic"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/font14" />
             </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>
-        <Button
-            android:id="@+id/update_button"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="@string/update"/>
+
+    <Button
+        android:id="@+id/update_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/purple_700"
+        android:text="@string/update" />
 </LinearLayout>

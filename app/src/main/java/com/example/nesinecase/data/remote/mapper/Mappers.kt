@@ -5,9 +5,9 @@ import com.example.nesinecase.domain.model.PostUIModel
 
 fun PostResponse.toUIModel(): PostUIModel {
     return PostUIModel(
-        body = this.body,
+        body = this.body.replace("/n", ""),
         id = this.id,
-        title = this.title,
+        title = this.title.replace("/n", ""),
         userId = this.userId
     )
 }

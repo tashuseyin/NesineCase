@@ -23,15 +23,7 @@ class PostDetailViewModel @Inject constructor(
     fun updatePost(postItem: PostUIModel) {
         viewModelScope.launch {
             updatePostUseCase.execute(postItem).collect { result ->
-                when (result) {
-                    is Resource.Success -> {
-                        _isUpdatePost.value = true
-                    }
-
-                    is Resource.Error -> {
-                        _isUpdatePost.value = false
-                    }
-                }
+                _isUpdatePost.value = result is Resource.Success
             }
         }
     }

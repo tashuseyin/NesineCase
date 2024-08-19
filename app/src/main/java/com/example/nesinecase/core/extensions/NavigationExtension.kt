@@ -8,6 +8,6 @@ fun <T> NavController.setDataPreviousScreen(key: String, value: T) {
 
 
 fun <T> NavController.getDataCurrentScreen(key: String): T? {
-    return this.previousBackStackEntry?.savedStateHandle?.get<T>(key)
+    return this.currentBackStackEntry?.savedStateHandle?.get<T>(key)
 }
 
