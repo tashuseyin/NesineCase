@@ -49,6 +49,7 @@ abstract class SwipeToDelete(context: Context) : ItemTouchHelper.SimpleCallback(
             )
         } else {
             background.setBounds(0, 0, 0, 0)
+            deleteIcon?.setBounds(0,0,0,0)
         }
         background.draw(c)
         deleteIcon?.draw(c)

@@ -1,5 +1,6 @@
 package com.example.nesinecase.features.post_list
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.viewModels
@@ -52,6 +53,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListB
         )
 
         val swipeToDelete = object : SwipeToDelete(requireContext()) {
+            @SuppressLint("NotifyDataSetChanged")
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 requireContext().showDialog(
                     title = getString(R.string.delete_post),
@@ -63,7 +65,7 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListB
                         postListViewModel.deletePost(postItem)
                     },
                     onNegativeButtonClick = {
-                        postListAdapter.notifyItemChanged(viewHolder.adapterPosition)
+                        postListAdapter.notifyDataSetChanged()
                     }
                 )
             }
