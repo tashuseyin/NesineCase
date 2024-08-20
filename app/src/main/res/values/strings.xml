@@ -7,4 +7,6 @@
     <string name="are_you_sure_you_want_to_remove_post">Are you sure you want to remove post?</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
 </resources>
