@@ -11,10 +11,9 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,47 +31,54 @@ class PostListViewModel @Inject constructor(
     }
 
     fun getAllPostsFromDB() {
-        getAllPostsFromDBUseCase.execute()
-            .onStart { _uiState.update { state -> state.copy(isLoading = true) } }
-            .onEach { result ->
-                handleResourceResult(
-                    resource = result,
-                    onSuccess = { data ->
-                        if (data.isEmpty()) {
-                            getApiPostListAndSaveDB()
-                        } else {
-                            _uiState.update { it.copy(posts = data) }
+        viewModelScope.launch {
+            getAllPostsFromDBUseCase.execute()
+                .onStart { _uiState.update { state -> state.copy(isLoading = true) } }
+                .collect { result ->
+                    handleResourceResult(
+                        resource = result,
+                        onSuccess = { data ->
+                            if (data.isEmpty()) {
+                                getApiPostListAndSaveDB()
+                            } else {
+                                _uiState.update { it.copy(posts = data) }
+                            }
                         }
-                    }
-                )
-            }.launchIn(viewModelScope)
+                    )
+                }
+        }
     }
 
     private fun getApiPostListAndSaveDB() {
-        getPostListAndSaveDBUseCase.execute()
-            .onStart { _uiState.update { state -> state.copy(isLoading = true) } }
-            .onEach { result ->
-                handleResourceResult(
-                    resource = result,
-                    onSuccess = { data ->
-                        _uiState.update { it.copy(posts = data) }
-                    }
-                )
-            }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            getPostListAndSaveDBUseCase.execute()
+                .onStart { _uiState.update { state -> state.copy(isLoading = true) } }
+                .collect { result ->
+                    handleResourceResult(
+                        resource = result,
+                        onSuccess = { data ->
+                            _uiState.update { it.copy(posts = data) }
+                        }
+                    )
+                }
+        }
     }
 
 
     fun deletePost(postItem: PostUIModel) {
-        deletePostUseCase.execute(postItem.id).onEach { result ->
-            handleResourceResult(
-                resource = result,
-                onSuccess = {
-                    val updateList = uiState.value.posts.toMutableList()
-                    updateList.remove(postItem)
-                    _uiState.update { it.copy(posts = updateList) }
-                }
-            )
-        }.launchIn(viewModelScope)
+        viewModelScope.launch {
+            deletePostUseCase.execute(postItem.id).collect { result ->
+                handleResourceResult(
+                    resource = result,
+                    onSuccess = {
+                        val updateList = uiState.value.posts.toMutableList()
+                        updateList.remove(postItem)
+                        _uiState.update { it.copy(posts = updateList) }
+                    }
+                )
+            }
+        }
+
     }
 
     private fun <T> handleResourceResult(
