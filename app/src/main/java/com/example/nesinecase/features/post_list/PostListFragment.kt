@@ -54,10 +54,10 @@ class PostListFragment : BaseFragment<FragmentPostListBinding>(FragmentPostListB
         val swipeToDelete = object : SwipeToDelete(requireContext()) {
             override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
                 requireContext().showDialog(
-                    title = "Delete",
-                    message = "Are you sure you want to remove post?",
-                    positiveButtonText = "Yes",
-                    negativeButtonText = "No",
+                    title = getString(R.string.delete_post),
+                    message = getString(R.string.are_you_sure_you_want_to_remove_post),
+                    positiveButtonText = getString(R.string.yes),
+                    negativeButtonText = getString(R.string.no),
                     onPositiveButtonClick = {
                         val postItem = postListAdapter.currentList[viewHolder.adapterPosition]
                         postListViewModel.deletePost(postItem)

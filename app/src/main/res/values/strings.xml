@@ -3,4 +3,8 @@
     <string name="update">Update</string>
     <string name="an_error_occurred">An error occurred!</string>
     <string name="okay">Okay</string>
+    <string name="delete_post">Delete Post</string>
+    <string name="are_you_sure_you_want_to_remove_post">Are you sure you want to remove post?</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 </resources>
